@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Chat</title>
+
+	<script
+  src="http://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous"></script>
+  <style>
+  	html {
+
+		  width: 100%;
+		  height: 100%;
+		  background: #1192d3 url(http://www.guifx.com/images/product_galleries/gfx-ic104_01.png ) no-repeat bottom right;  
+		  background-size: cover;
+		   
+
+  	}
+
+
+
+             
+  </style>
+  	
+</head>
+<body>
+
+       <div id="weather_template">
+       		<div>
+       			<h3 class="city_name"></h3>
+       			<h4 class="current_weather"></h4>
+
+       		</div>
+
+       </div>
+       <div id="weather_forecast"></div>
+
+
+    <script>
+		// TODO: using the response data from api.geonames.org, build an HTML page that displays the weather to the user in a "fun" way
+	 $(document).ready(function() {
+		$.get('http://api.geonames.org/weatherJSON?north=41&south=39&east=-104&west=-106&username=ertyseidohl', function(res) {
+			console.log(res.weatherObservations);
+			var data = res.weatherObservations;
+
+			
+		          for (var i = 0; i < data.length; i++){
+		               var weather = data[i];
+		               var templateClone = $('#weather_template').children().first().clone();
+		               templateClone.find('.city_name').text(weather.stationName).css({
+		               	color: Math.random() < 0.5 ? "blue": "yellow"
+		               });
+		               templateClone.find('.current_weather').text(weather.temperature);
+
+		               $('#weather_forecast').append(templateClone);
+		          }
+		      
+		});
+		});
+
+	</script>
+  
+
+
+</body>
+</html>
